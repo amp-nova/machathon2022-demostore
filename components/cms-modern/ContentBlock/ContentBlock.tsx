@@ -35,6 +35,8 @@ import ThemeTypographySpec      from '@components/cms-modern/ThemeTypographySpec
 import ThemeWrapper             from '@components/cms-modern/ThemeWrapper';
 import Video                    from '@components/cms-modern/Video';
 
+import Look                     from '@components/cms-modern/Look';
+
 import { useRouter } from 'next/router';
 
 export type ContentBlockType = 'SLOT' | 'CONTENT';
@@ -77,7 +79,8 @@ const ComponentMapping: any = {
     'https://demostore.amplience.com/slots/flexible'                 : FlexibleSlot,
     'https://demostore.amplience.com/slots/landing-page'             : BannerSlot,
     'https://demostore.amplience.com/slots/localized-banner'         : LocalizedBannerSlot,
-    'https://demostore.amplience.com/slots/personalized-banner'      : PersonalizedBannerSlot
+    'https://demostore.amplience.com/slots/personalized-banner'      : PersonalizedBannerSlot,
+    'https://amplience.com/look'                                     : Look
     
 };
 
