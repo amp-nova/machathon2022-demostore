@@ -13,23 +13,6 @@ const styles = (theme: Theme) => ({
     },
     content: {
         padding: 10
-    },
-    actions: { 
-        justifyContent: "center",
-        paddingBottom: 20
-    },
-    links: { 
-        paddingLeft: 20,
-        paddingRight: 20,
-        color: "#fff",
-        backgroundColor: "#000",
-        borderRadius: 3,
-        "&:hover": {
-            backgroundColor: "#000" 
-        }
-    },
-    linkText: {
-        color: "#fff"
     }
 });
 
