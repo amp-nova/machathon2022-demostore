@@ -1,8 +1,6 @@
-// Generated with util/create-component.js
 import React from "react";
-import { Grid, CardContent, Typography, Card as MuiCard, CardActions, Button, Link } from '@mui/material';
+import { Grid, CardContent, Typography, Card as MuiCard, Link } from '@mui/material';
 import { CmsContent } from '@lib/cms/CmsContent';
-import { ContentBlock } from '@components/cms-modern';
 import { withStyles, WithStyles } from '@mui/styles'
 import { Theme } from '@mui/material';
 import Image from "../Image";
@@ -75,11 +73,6 @@ export interface LookProps extends WithStyles<typeof styles> {
      * Description
      */
     description?: string;
-
-    /**
-     * Call-to-action Links
-     */
-    links?: any[];
 }
 
 const Look: React.FC<LookProps> = ({
@@ -87,7 +80,6 @@ const Look: React.FC<LookProps> = ({
   brand,
   title,
   description,
-  links,
   classes
 }) => {
   return (
@@ -128,21 +120,6 @@ const Look: React.FC<LookProps> = ({
             )
           }
         </CardContent>
-        <CardActions className={classes.actions}>
-          {
-            links && links.map((link: any, i: number) => {
-              if (link.label) {
-                return (
-                  <Button className={classes.links} href={link.value} key={i}>
-                    <Typography variant="h4" className={classes.linkText}>{link.label}</Typography>
-                  </Button>
-                )
-              } else {
-                return null;
-              }
-            })
-          }
-        </CardActions>
       </MuiCard>
     </Grid>
   )
