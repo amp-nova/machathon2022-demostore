@@ -33,7 +33,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 }
 
-export default function lookMainPage(
+export default function LookMainPage(
   { looksData, content }
     : InferGetServerSidePropsType<typeof getServerSideProps>) {
 
@@ -64,4 +64,4 @@ export default function lookMainPage(
   );
 }
 
-lookMainPage.Layout = Layout;
+LookMainPage.Layout = Layout;
