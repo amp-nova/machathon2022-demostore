@@ -31,7 +31,7 @@ Out of the box, `dc-demostore-core` may be used without needing to have an Ampli
  The following commands will install `dc-demostore-core` on your local machine.
 
 ```sh
-$ gh repo clone amplience/dc-demostore-core
+$ gh repo clone rezakalfane/machathon2022-demostore
 $ cd dc-demostore-core
 $ yarn install
 ```
