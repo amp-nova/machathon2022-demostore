@@ -61,8 +61,7 @@ export default class MyDocument extends Document {
           { /* end algolia instantsearch */}
 
           { /* constructor.io beacon */}
-          <script src="https://cnstrc.com/js/cust/machathon2022_EYt16u.js"
-            crossOrigin="anonymous" defer />
+          <script src="https://cnstrc.com/js/cust/machathon2022_EYt16u.js" defer />
           { /* constructor.io beacon */}
         </Head>
         <body>
