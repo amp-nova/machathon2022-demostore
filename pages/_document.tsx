@@ -59,6 +59,11 @@ export default class MyDocument extends Document {
             integrity="sha256-t2ATOGCtAIZNnzER679jwcFcKYfLlw01gli6F6oszk8="
             crossOrigin="anonymous" />
           { /* end algolia instantsearch */}
+
+          { /* constructor.io beacon */}
+          <script src="https://cnstrc.com/js/cust/machathon2022_EYt16u.js"
+            crossOrigin="anonymous" defer />
+          { /* constructor.io beacon */}
         </Head>
         <body>
           <Main />
