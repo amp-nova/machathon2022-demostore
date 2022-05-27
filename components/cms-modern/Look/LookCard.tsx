@@ -57,6 +57,8 @@ export interface LookProps extends WithStyles<typeof styles> {
      * Description
      */
     description?: string;
+
+    deliveryKey: any;
 }
 
 const LookCard: React.FC<LookProps> = ({
@@ -64,6 +66,7 @@ const LookCard: React.FC<LookProps> = ({
   brand,
   title,
   description,
+  deliveryKey,
   classes
 }) => {
   return (
@@ -78,7 +81,9 @@ const LookCard: React.FC<LookProps> = ({
         {
           image && (
             <div className="amp-dc-image">
-              <Image alt={title} image={image} />
+              <Link href={`/look/${deliveryKey}`}>
+                <Image alt={title} image={image} />
+              </Link>
             </div>
           )
         }

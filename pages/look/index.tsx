@@ -7,6 +7,8 @@ import React, { useEffect } from "react";
 import { Layout } from "@components/core";
 import { Grid, Typography } from "@mui/material";
 import LookCard from "@components/cms-modern/Look/LookCard";
+// import { ConstructorIOClient } from "@constructor-io/constructorio-client-javascript";
+const ConstructorIOClient = require("@constructor-io/constructorio-client-javascript");
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const cmsContext = await createCmsContext(context.req);
@@ -37,18 +39,25 @@ export default function LookMainPage(
   { looksData, content }
     : InferGetServerSidePropsType<typeof getServerSideProps>) {
 
-  const [looksList, setlooksList] = React.useState(looksData as any);
+  const [looksList, setlooksList] = React.useState([] as Array<any>);
 
   const cmsContext = useCmsContext();
 
+  const constructorClient = new ConstructorIOClient({
+    apiKey: 'key_qFJeU4DThqOqEtQt',
+    sessionId: 1234,
+    clientId: "1234"
+  });
+
   useEffect(() => {
-    let filterRequest: GetByFilterRequest = {
-      filterBy: [{
-        path: "/_meta/schema",
-        value: "https://amplience.com/look"
-      }]
-    };
-    fetchContent([filterRequest], cmsContext).then(result => setlooksList(result[0]));
+    console.log("USE EFFECT");
+    constructorClient.search.getSearchResults('https://amplience.com/look', {
+      section: "Looks",
+      resultsPerPage: 50
+    }).then((data: any) => {
+      console.log("DATA", data);
+      setlooksList(data.response.results);
+    }).catch((e: any) => { console.log("ERROR", e) });
   }, [])
 
   return (
@@ -57,7 +66,7 @@ export default function LookMainPage(
       <pre>{looksList.length}</pre>
       <Grid container style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
         {
-          looksList.responses.map((look: any, i: number) => <LookCard key={i} {...look.content} />)
+          looksList.map((look: any, i: number) => { return <pre>{ JSON.stringify(look) }</pre>} )
         }
       </Grid>
     </div>
