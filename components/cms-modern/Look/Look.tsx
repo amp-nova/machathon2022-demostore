@@ -5,6 +5,7 @@ import { withStyles, WithStyles } from '@mui/styles'
 import { Theme } from '@mui/material';
 import Image from "../Image";
 import ReactMarkdown from 'markdown-to-jsx';
+import CuratedProductGrid from "@components/cms/CuratedProductGrid";
 
 const styles = (theme: Theme) => ({
     root: {},
@@ -56,6 +57,11 @@ export interface LookProps extends WithStyles<typeof styles> {
      * Description
      */
     description?: string;
+
+    /**
+     * Main and related look products
+     */
+    products: any[];
 }
 
 const Look: React.FC<LookProps> = ({
@@ -63,6 +69,7 @@ const Look: React.FC<LookProps> = ({
   brand,
   title,
   description,
+  products,
   classes
 }) => {
   return (
@@ -104,6 +111,7 @@ const Look: React.FC<LookProps> = ({
           }
         </CardContent>
       </MuiCard>
+      <CuratedProductGrid header={'Shop the Look'} products={products} />
     </Grid>
   )
 };
