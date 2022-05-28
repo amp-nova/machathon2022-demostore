@@ -81,7 +81,7 @@ const LookCard: React.FC<LookProps> = ({
         {
           image && (
             <div className="amp-dc-image">
-              <Link href={`/look/${deliveryKey}`}>
+              <Link href={`/${deliveryKey}`}>
                 <Image alt={title} image={image} />
               </Link>
             </div>
