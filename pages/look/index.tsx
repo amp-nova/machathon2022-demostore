@@ -58,7 +58,7 @@ export default function LookMainPage(
       console.log("DATA", data);
       setlooksList(data.response.results);
     }).catch((e: any) => { console.log("ERROR", e) });
-  }, [])
+  })
 
   return (
     <div className="af-main-content" style={{ paddingBottom: 60 }}>
