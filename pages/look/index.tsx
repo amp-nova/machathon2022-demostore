@@ -65,7 +65,7 @@ export default function LookMainPage(
       <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Shop the Look</Typography>
       <Grid container style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
         {
-          looksList.map((look: any, i: number) => { return <LookCard {...look.data} deliveryKey={look.data._meta.deliveryKey} /> } )
+          looksList.map((look: any, i: number) => { return <LookCard key={i}  {...look.data} deliveryKey={look.data._meta.deliveryKey} /> } )
         }
       </Grid>
     </div>
