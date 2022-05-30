@@ -14,6 +14,12 @@ const styles = (theme: Theme) => ({
     content: {
         padding: 2,
         '&:last-child': { paddingBottom: 2 }
+    },
+    overlay: {
+      zIndex: 100,
+      background: "rgba(0, 0, 0, 0.0)",
+      opacity: 0,
+      '&:hover': { opacity: 1, background: "rgba(0, 0, 0, 0.5)" }
     }
 });
 
@@ -80,11 +86,17 @@ const LookCard: React.FC<LookProps> = ({
       <CardContent className={classes.content}>
         {
           image && (
-            <div className="amp-dc-image">
-              <Link href={`/${deliveryKey}`}>
+            <Link href={`/${deliveryKey}`}>
+              <div className="amp-dc-image" style={{position: "relative"}}>
+                <div className={classes.overlay} style={{width: "100%", height: "100%", top: 0, left: 0, position: "absolute"}}>
+                  <div style={{textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: 'translateX(-50%) translateY(-50%)'}}>
+                    <Typography style={{color: "#fff"}} component="h4" variant="h4">{brand}</Typography>
+                    <Typography style={{color: "#fff"}} component="h5" variant="h5">{title}</Typography>
+                  </div>
+                </div>
                 <Image alt={title} image={image} />
-              </Link>
-            </div>
+              </div>
+            </Link>
           )
         }
       </CardContent>
