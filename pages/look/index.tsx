@@ -21,14 +21,15 @@ export default function LookMainPage(
 
   const [looksList, setlooksList] = React.useState([] as Array<any>);
 
-  const constructorClient = new ConstructorIOClient({
-    apiKey: 'key_qFJeU4DThqOqEtQt'
-    // sessionId: 1234,
-    // clientId: "1234"
-  });
-
   useEffect(() => {
     console.log("USE EFFECT");
+
+    const constructorClient = new ConstructorIOClient({
+      apiKey: 'key_qFJeU4DThqOqEtQt'
+      // sessionId: 1234,
+      // clientId: "1234"
+    });
+    
     constructorClient.search.getSearchResults('https://amplience.com/look', {
       section: "Looks",
       resultsPerPage: 50
