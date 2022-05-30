@@ -15,6 +15,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 }
 
+interface FacetsProps {
+  display_name: string;
+  options: Array<any>;
+}
+
 export default function LookMainPage(
   { content }
     : InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -23,8 +28,8 @@ export default function LookMainPage(
   const [looksNumber, setlooksNumber] = React.useState(0);
   const [viewedLooksList, setviewedLooksList] = React.useState([] as Array<any>);
 
-  const [brandFacet, setbrandFacet] = React.useState([] as Array<any>);
-  const [colorFacet, setcolorFacet] = React.useState([] as Array<any>);
+  const [brandFacet, setbrandFacet] = React.useState({} as FacetsProps);
+  const [colorFacet, setcolorFacet] = React.useState({} as FacetsProps);
 
   useEffect(() => {
     console.log("USE EFFECT");
@@ -71,15 +76,15 @@ export default function LookMainPage(
         <Grid item md={2} xs={12}>
       <Typography variant="h3" component="h3">{brandFacet.display_name}</Typography>
       {
-        brandFacet?.options?.map((item: any, index: i) => { 
-          return <div>{`${item.display_name} (${item.count * 3})`}</div>
+        brandFacet?.options?.map((item: any, i: number) => { 
+          return <div key={i}>{`${item.display_name} (${item.count * 3})`}</div>
         })
       }
       
       <Typography variant="h3" component="h3" style={{paddingTop: 30}}>{colorFacet.display_name}</Typography>
       {
-        colorFacet?.options?.map((item: any, index: i) => { 
-          return <div>{`${item.display_name} (${item.count * 3})`}</div>
+        colorFacet?.options?.map((item: any, i: number) => { 
+          return <div key={i}>{`${item.display_name} (${item.count * 3})`}</div>
         })
       }
 </Grid>
