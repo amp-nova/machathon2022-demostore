@@ -106,7 +106,7 @@ const Look: React.FC<LookProps> = ({
       console.log("DATA", data);
       setviewedLooksList(data.response.results);
     }).catch((e: any) => { console.log("ERROR", e) });
-  }, []);
+  }, [_meta.deliveryId]);
 
   return (
     <Grid container>
