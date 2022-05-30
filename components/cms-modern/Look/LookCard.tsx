@@ -19,7 +19,8 @@ const styles = (theme: Theme) => ({
       zIndex: 100,
       background: "rgba(0, 0, 0, 0.0)",
       opacity: 0,
-      '&:hover': { opacity: 1, background: "rgba(0, 0, 0, 0.5)" }
+      transition: "0.5s",
+      '&:hover': { transition: "0.5s", opacity: 1, background: "rgba(0, 0, 0, 0.5)" }
     }
 });
 
