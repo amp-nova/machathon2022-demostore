@@ -5,7 +5,6 @@ import { withStyles, WithStyles } from '@mui/styles'
 import { Theme } from '@mui/material';
 import Image from "../Image";
 import ReactMarkdown from 'markdown-to-jsx';
-import CuratedProductGrid from "@components/cms/CuratedProductGrid";
 
 const styles = (theme: Theme) => ({
     root: {},
@@ -111,7 +110,18 @@ const Look: React.FC<LookProps> = ({
           }
         </CardContent>
       </MuiCard>
-      <CuratedProductGrid header={'Shop the Look'} products={products} />
+      <Typography variant="h2" component="h2" style={{ marginTop: 15, marginBottom: 15 }}>
+        Shop the Look
+      </Typography>
+      <Grid container style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
+      {
+        products.map((item: any, i: number) => {
+          return <div style={{width: 220, padding: 10}}>
+              <Image key={i} alt={title} image={image} />
+            </div>
+        })
+      }
+      </Grid>
     </Grid>
   )
 };
