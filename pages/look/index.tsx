@@ -1,6 +1,5 @@
 import fetchStandardPageData from "@lib/page/fetchStandardPageData";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { createCmsContext, useCmsContext } from "@lib/cms/CmsContext";
 import React, { useEffect } from "react";
 import { Layout } from "@components/core";
 import { Grid, Typography } from "@mui/material";
@@ -8,7 +7,6 @@ import LookCard from "@components/cms-modern/Look/LookCard";
 const ConstructorIOClient = require("@constructor-io/constructorio-client-javascript");
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const cmsContext = await createCmsContext(context.req);
   const data = await fetchStandardPageData({ content: {} }, context)
   return {
     props: {

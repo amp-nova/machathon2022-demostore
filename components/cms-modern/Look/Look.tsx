@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, CardContent, Typography, Card as MuiCard, Link } from '@mui/material';
 import { CmsContent } from '@lib/cms/CmsContent';
 import { withStyles, WithStyles } from '@mui/styles'
 import { Theme } from '@mui/material';
 import Image from "../Image";
 import ReactMarkdown from 'markdown-to-jsx';
+const ConstructorIOClient = require("@constructor-io/constructorio-client-javascript");
 
 const styles = (theme: Theme) => ({
     root: {},
@@ -61,16 +62,37 @@ export interface LookProps extends WithStyles<typeof styles> {
      * Main and related look products
      */
     products: any[];
+
+    lookId?: string;
 }
 
 const Look: React.FC<LookProps> = ({
   image,
   brand,
   title,
+  lookId,
   description,
   products,
   classes
 }) => {
+  const [productsList, setproductsList] = React.useState([] as Array<any>);
+
+  const constructorClient = new ConstructorIOClient({
+    apiKey: 'key_qFJeU4DThqOqEtQt',
+    sessionId: 1234,
+    clientId: "1234"
+  });
+
+  useEffect(() => {
+    // console.log("USE EFFECT");
+    // constructorClient.browse.getBrowseResults(
+    //   ...
+    // }).then((data: any) => {
+    //   console.log("DATA", data);
+    //   setproductsList(data.response.results);
+    // }).catch((e: any) => { console.log("ERROR", e) });
+  });
+
   return (
     <Grid item xs={12} sm data-testid="Look" className={classes.root}>
       <MuiCard className={classes.container} style={{

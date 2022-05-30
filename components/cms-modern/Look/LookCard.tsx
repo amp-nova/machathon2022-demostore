@@ -1,10 +1,9 @@
 import React from "react";
-import { Grid, CardContent, Typography, Card as MuiCard, Link } from '@mui/material';
+import { CardContent, Typography, Card as MuiCard, Link } from '@mui/material';
 import { CmsContent } from '@lib/cms/CmsContent';
 import { withStyles, WithStyles } from '@mui/styles'
 import { Theme } from '@mui/material';
 import Image from "../Image";
-import ReactMarkdown from 'markdown-to-jsx';
 
 const styles = (theme: Theme) => ({
     root: {},
@@ -65,6 +64,8 @@ export interface LookProps extends WithStyles<typeof styles> {
      */
     description?: string;
 
+    lookId?: string;
+
     deliveryKey: any;
 }
 
@@ -72,10 +73,12 @@ const LookCard: React.FC<LookProps> = ({
   image,
   brand,
   title,
+  lookId,
   description,
   deliveryKey,
   classes
 }) => {
+
   return (
     <MuiCard className={classes.container} style={{
         boxShadow: "none", 
