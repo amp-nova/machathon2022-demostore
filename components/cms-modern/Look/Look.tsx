@@ -78,9 +78,9 @@ const Look: React.FC<LookProps> = ({
   const [productsList, setproductsList] = React.useState([] as Array<any>);
 
   const constructorClient = new ConstructorIOClient({
-    apiKey: 'key_qFJeU4DThqOqEtQt',
-    sessionId: 1234,
-    clientId: "1234"
+    apiKey: 'key_qFJeU4DThqOqEtQt'
+    // sessionId: 1234,
+    // clientId: "1234"
   });
 
   useEffect(() => {
