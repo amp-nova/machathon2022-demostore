@@ -116,8 +116,8 @@ const Look: React.FC<LookProps> = ({
       <Grid container style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
       {
         products.map((item: any, i: number) => {
-          return <div style={{width: 220, padding: 10}}>
-              <Image key={i} alt={title} image={image} />
+          return <div key={i} style={{width: 220, padding: 10}}>
+              <Image alt={title} image={image} />
             </div>
         })
       }
