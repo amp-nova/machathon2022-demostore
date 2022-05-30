@@ -20,7 +20,11 @@ export default function LookMainPage(
     : InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const [looksList, setlooksList] = React.useState([] as Array<any>);
+  const [looksNumber, setlooksNumber] = React.useState(0);
   const [viewedLooksList, setviewedLooksList] = React.useState([] as Array<any>);
+
+  const [brandFacet, setbrandFacet] = React.useState([] as Array<any>);
+  const [colorFacet, setcolorFacet] = React.useState([] as Array<any>);
 
   useEffect(() => {
     console.log("USE EFFECT");
@@ -33,15 +37,24 @@ export default function LookMainPage(
     
     constructorClient.search.getSearchResults('https://amplience.com/look', {
       section: "Looks",
+      // filters: {
+      //   color: "pink"
+      // },
+      // filters: {
+      //   brand: "Ellos Collection"
+      // },
       resultsPerPage: 50
     }).then((data: any) => {
       console.log("DATA", data);
       setlooksList(data.response.results);
+      setlooksNumber(data.response.total_num_results);
+      setbrandFacet(data.response.facets[0])
+      setcolorFacet(data.response.facets[1])
     }).catch((e: any) => { console.log("ERROR", e) });
 
     constructorClient.recommendations.getRecommendations('looks_page', {
       section: "Looks",
-      resultsPerPage: 6
+      numResults: 5
     }).then((data: any) => {
       console.log("DATA", data);
       setviewedLooksList(data.response.results);
@@ -52,6 +65,25 @@ export default function LookMainPage(
   return (
     <div className="af-main-content" style={{ paddingBottom: 60 }}>
       <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Shop Your Looks</Typography>
+      <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="body1" component="p">{looksNumber} looks found for you</Typography>
+
+      <Grid container>
+        <Grid item md={2} xs={12}>
+      <Typography variant="h3" component="h3">{brandFacet.display_name}</Typography>
+      {
+        brandFacet?.options?.map((item: any, index: i) => { 
+          return <div>{`${item.display_name} (${item.count})`}</div>
+        })
+      }
+      
+      <Typography variant="h3" component="h3" style={{paddingTop: 30}}>{colorFacet.display_name}</Typography>
+      {
+        colorFacet?.options?.map((item: any, index: i) => { 
+          return <div>{`${item.display_name} (${item.count})`}</div>
+        })
+      }
+</Grid>
+<Grid item md={10} xs={12}>
       <Grid container style={{display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
         {
           looksList.map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
@@ -59,11 +91,12 @@ export default function LookMainPage(
       </Grid>
 
       <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Recently Viewed Looks</Typography>
-      <pre>{JSON.stringify(viewedLooksList)}</pre>
       <Grid container style={{display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
         {
           viewedLooksList.map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
         }
+      </Grid>
+      </Grid>
       </Grid>
     </div>
   );
