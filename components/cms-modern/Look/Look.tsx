@@ -64,6 +64,8 @@ export interface LookProps extends WithStyles<typeof styles> {
     products: any[];
 
     lookId?: string;
+
+    _meta?: any;
 }
 
 const Look: React.FC<LookProps> = ({
@@ -71,6 +73,7 @@ const Look: React.FC<LookProps> = ({
   brand,
   title,
   lookId,
+  _meta,
   description,
   products,
   classes
@@ -79,20 +82,21 @@ const Look: React.FC<LookProps> = ({
 
 
   useEffect(() => {
-    // console.log("USE EFFECT");
+    console.log("USE EFFECT");
 
-    // const constructorClient = new ConstructorIOClient({
-    //   apiKey: 'key_qFJeU4DThqOqEtQt'
-    // sessionId: 1234,
-    // clientId: "1234"
-    // });
-    // constructorClient.browse.getBrowseResults(
-    //   ...
-    // }).then((data: any) => {
-    //   console.log("DATA", data);
-    //   setproductsList(data.response.results);
-    // }).catch((e: any) => { console.log("ERROR", e) });
-  });
+    const constructorClient = new ConstructorIOClient({
+      apiKey: 'key_qFJeU4DThqOqEtQt'
+      // sessionId: 1234,
+      // clientId: "1234"
+    });
+
+    constructorClient.browse.getBrowseResults("collection_id", _meta.deliveryId, {
+      resultsPerPage: 50
+    }).then((data: any) => {
+      console.log("DATA", data);
+      setproductsList(data.response.results);
+    }).catch((e: any) => { console.log("ERROR", e) });
+  }, []);
 
   return (
     <Grid item xs={12} sm data-testid="Look" className={classes.root}>
@@ -118,14 +122,25 @@ const Look: React.FC<LookProps> = ({
               </Typography>
             )
           }
-          
           {
             image && (
               <div className="amp-dc-image">
-                <Image alt={title} image={image} />
+                <Image alt={title} image={image} query={'w=1280'}/>
               </div>
             )
           }
+          <Typography variant="h2" component="h2" style={{ marginTop: 15, marginBottom: 15 }}>
+            Shop the Look
+          </Typography>
+          <Grid container style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
+          {
+            productsList.map((item: any, i: number) => {
+              return <div key={i} style={{width: 220, padding: 10}}>
+                  <img alt={item.value} src={`${item.data.image_url}?w=220`} />
+                </div>
+            })
+          }
+          </Grid>
           {
             description && (
               <ReactMarkdown style={{paddingTop: 20}} options={options}>{description}</ReactMarkdown>
@@ -133,18 +148,6 @@ const Look: React.FC<LookProps> = ({
           }
         </CardContent>
       </MuiCard>
-      <Typography variant="h2" component="h2" style={{ marginTop: 15, marginBottom: 15 }}>
-        Shop the Look
-      </Typography>
-      <Grid container style={{ display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
-      {
-        products.map((item: any, i: number) => {
-          return <div key={i} style={{width: 220, padding: 10}}>
-              <Image alt={title} image={image} />
-            </div>
-        })
-      }
-      </Grid>
     </Grid>
   )
 };

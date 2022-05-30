@@ -67,6 +67,8 @@ export interface LookProps extends WithStyles<typeof styles> {
     lookId?: string;
 
     deliveryKey: any;
+
+    deliveryId: any;
 }
 
 const LookCard: React.FC<LookProps> = ({
@@ -76,6 +78,7 @@ const LookCard: React.FC<LookProps> = ({
   lookId,
   description,
   deliveryKey,
+  deliveryId,
   classes
 }) => {
 
@@ -90,7 +93,7 @@ const LookCard: React.FC<LookProps> = ({
       <CardContent className={classes.content}>
         {
           image && (
-            <Link href={`/${deliveryKey}`}>
+            <Link href={`/${deliveryKey}/${deliveryId}`}>
               <div className="amp-dc-image" style={{position: "relative"}}>
                 <div className={classes.overlay} style={{width: "100%", height: "100%", top: 0, left: 0, position: "absolute"}}>
                   <div style={{textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: 'translateX(-50%) translateY(-50%)'}}>
@@ -98,7 +101,7 @@ const LookCard: React.FC<LookProps> = ({
                     <Typography style={{color: "#fff"}} component="h5" variant="h5">{title}</Typography>
                   </div>
                 </div>
-                <Image alt={title} image={image} />
+                <Image alt={title} image={image} query={'w=220'} />
               </div>
             </Link>
           )

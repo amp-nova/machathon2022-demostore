@@ -4,6 +4,8 @@ import create404Error from '@lib/page/errors/create404Error';
 import React from "react";
 import { ContentBlock } from "@components/cms-modern";
 import { Layout } from "@components/core";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const {
@@ -42,6 +44,11 @@ export default function StorePage(
 
   return (
     <div className="af-main-content" style={{paddingBottom: 60}}>
+      <Typography variant="h3" component="h3" style={{paddingTop: 30}}>
+        <Link href={'/look'}>
+          &lt; Back to Your Looks
+        </Link>
+      </Typography>
       <ContentBlock content={content.look}></ContentBlock>
     </div>
   );
