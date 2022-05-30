@@ -2,7 +2,7 @@ import fetchStandardPageData from "@lib/page/fetchStandardPageData";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import React, { useEffect } from "react";
 import { Layout } from "@components/core";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Input, Typography } from "@mui/material";
 import LookCard from "@components/cms-modern/Look/LookCard";
 const ConstructorIOClient = require("@constructor-io/constructorio-client-javascript");
 
@@ -38,6 +38,10 @@ export default function LookMainPage(
   const [selectedBrand, setselectedBrand] = React.useState("" || null);
   const [selectedColor, setselectedColor] = React.useState("" || null);
 
+  const [search, setSearch] = React.useState('');
+  const onChange = (event: any) => {
+    setSearch(event.target.value);
+  };
 
   useEffect(() => {
     console.log("USE EFFECT");
@@ -56,7 +60,10 @@ export default function LookMainPage(
       filters.color = selectedColor;
     }
 
-    constructorClient.search.getSearchResults('https://amplience.com/look', {
+    let searchFilter = 'https://amplience.com/look';
+    if (search.length > 2) searchFilter += " " + search;
+
+    constructorClient.search.getSearchResults(searchFilter, {
       section: "Looks",
       filters,
       resultsPerPage: 50
@@ -82,7 +89,7 @@ export default function LookMainPage(
       setviewedLooksList(data.response.results);
     }).catch((e: any) => { console.log("ERROR", e) });
 
-  }, [selectedBrand, selectedColor])
+  }, [selectedBrand, selectedColor, search])
 
   return (
     <div className="af-main-content" style={{ paddingBottom: 60 }}>
@@ -91,7 +98,9 @@ export default function LookMainPage(
 
       <Grid container>
         <Grid item md={2} xs={12}>
-
+          <div style={{paddingBottom: 20}}>
+            <input value={search} onChange={onChange} />
+          </div>
           {
             brandFacet &&
             <>
