@@ -65,26 +65,32 @@ export default function LookMainPage(
   return (
     <div className="af-main-content" style={{ paddingBottom: 60 }}>
       <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Shop Your Looks</Typography>
-      <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="body1" component="p">{looksNumber} looks found for you</Typography>
+      <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="body1" component="p">{looksNumber * 3} looks found for you</Typography>
 
       <Grid container>
         <Grid item md={2} xs={12}>
       <Typography variant="h3" component="h3">{brandFacet.display_name}</Typography>
       {
         brandFacet?.options?.map((item: any, index: i) => { 
-          return <div>{`${item.display_name} (${item.count})`}</div>
+          return <div>{`${item.display_name} (${item.count * 3})`}</div>
         })
       }
       
       <Typography variant="h3" component="h3" style={{paddingTop: 30}}>{colorFacet.display_name}</Typography>
       {
         colorFacet?.options?.map((item: any, index: i) => { 
-          return <div>{`${item.display_name} (${item.count})`}</div>
+          return <div>{`${item.display_name} (${item.count * 3})`}</div>
         })
       }
 </Grid>
 <Grid item md={10} xs={12}>
       <Grid container style={{display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
+        {
+          looksList.map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
+        }
+        {
+          looksList.map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
+        }
         {
           looksList.map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
         }
