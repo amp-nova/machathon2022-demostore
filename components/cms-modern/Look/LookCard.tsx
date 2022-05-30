@@ -101,7 +101,7 @@ const LookCard: React.FC<LookProps> = ({
                     <Typography style={{color: "#fff"}} component="h5" variant="h5">{title}</Typography>
                   </div>
                 </div>
-                <Image alt={title} image={image} query={'w=220'} />
+                <Image alt={title} image={image} query={'fmt=jpg&bg=rgb(255,255,255)&w=220'} />
               </div>
             </Link>
           )

@@ -39,7 +39,7 @@ export default function LookMainPage(
       setlooksList(data.response.results);
     }).catch((e: any) => { console.log("ERROR", e) });
 
-    constructorClient.recommendations.getRecommendations('home_page_2', {
+    constructorClient.recommendations.getRecommendations('looks_page', {
       section: "Looks",
       resultsPerPage: 6
     }).then((data: any) => {
@@ -59,6 +59,7 @@ export default function LookMainPage(
       </Grid>
 
       <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Recently Viewed Looks</Typography>
+      <pre>{JSON.stringify(viewedLooksList)}</pre>
       <Grid container style={{display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
         {
           viewedLooksList.map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
