@@ -83,6 +83,8 @@ export interface LookProps extends WithStyles<typeof styles> {
     lookId?: string;
 
     _meta?: any;
+
+    color?: string;
 }
 
 const Look: React.FC<LookProps> = ({
@@ -90,6 +92,7 @@ const Look: React.FC<LookProps> = ({
   brand,
   title,
   lookId,
+  color,
   _meta,
   description,
   products,
@@ -108,49 +111,23 @@ const Look: React.FC<LookProps> = ({
       // clientId: "1234"
     });
 
+
+  }, [color]);
+
+  useEffect(() => {
+    console.log("USE EFFECT");
+
+    const constructorClient = new ConstructorIOClient({
+      apiKey: 'key_qFJeU4DThqOqEtQt'
+      // sessionId: 1234,
+      // clientId: "1234"
+    });
+
     constructorClient.browse.getBrowseResults("collection_id", _meta.deliveryId, {
       numResults: 10
     }).then((data: any) => {
       console.log("DATA", data);
       setproductsList(data.response.results);
-
-      const title = data?.response?.collection?.data?.title;
-      const color = data?.response?.collection?.data?.color;
-      const brand = data?.response?.collection?.data?.brand;
-
-      let recs = [] as any[];
-      if ( color ) {
-        let searchFilter = `https://amplience.com/look ${color}`;
-        constructorClient.search.getSearchResults(searchFilter, {
-          section: "Looks",
-          numResults: 6
-        }).then((data: any) => {
-          console.log("RECS COLOR", data);
-          data.response.results.forEach((item: any) => {
-              if ( item.data.title !== title ) {
-                item.data.reason = "(because of color)";
-                recs.push(item);
-              }
-          })
-       })
-      }
-      if ( brand ) {
-        let searchFilter = `https://amplience.com/look ${brand}`;
-        constructorClient.search.getSearchResults(searchFilter, {
-          section: "Looks",
-          numResults: 6
-        }).then((data: any) => {
-          console.log("RECS BRAND", data);
-          data.response.results.forEach((item: any) => {
-            if ( item.data.title !== title ) {
-              item.data.reason = "(because of brand)";
-              recs.push(item)
-            };
-          })
-          // shuffle(recs);
-          setrecLooksList(recs);
-       })
-      }
     }).catch((e: any) => { console.log("ERROR", e) });
 
     constructorClient.recommendations.getRecommendations('looks_page', {
@@ -160,6 +137,40 @@ const Look: React.FC<LookProps> = ({
       console.log("DATA", data);
       setviewedLooksList(data.response.results);
     }).catch((e: any) => { console.log("ERROR", e) });
+
+    let recs = [] as any[];
+    if ( color ) {
+      let searchFilter = `https://amplience.com/look ${color}`;
+      constructorClient.search.getSearchResults(searchFilter, {
+        section: "Looks",
+        numResults: 6
+      }).then((data: any) => {
+        console.log("RECS COLOR", data);
+        data.response.results.forEach((item: any) => {
+            if ( item.data.title !== title ) {
+              item.data.reason = "(because of color)";
+              recs.push(item);
+            }
+        })
+     })
+    }
+    if ( brand ) {
+      let searchFilter = `https://amplience.com/look ${brand}`;
+      constructorClient.search.getSearchResults(searchFilter, {
+        section: "Looks",
+        numResults: 6
+      }).then((data: any) => {
+        console.log("RECS BRAND", data);
+        data.response.results.forEach((item: any) => {
+          if ( item.data.title !== title ) {
+            item.data.reason = "(because of brand)";
+            recs.push(item)
+          };
+        })
+        // shuffle(recs);
+        setrecLooksList(recs);
+     })
+    }
   }, [_meta.deliveryId]);
 
   return (
