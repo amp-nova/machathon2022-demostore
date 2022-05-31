@@ -26,6 +26,14 @@ const styles = (theme: Theme) => ({
     }
 });
 
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 const options = {
   overrides: {
     h1: { component: Typography, props: { variant: 'h1' } },
@@ -89,6 +97,7 @@ const Look: React.FC<LookProps> = ({
 }) => {
   const [productsList, setproductsList] = React.useState([] as Array<any>);
   const [viewedLooksList, setviewedLooksList] = React.useState([] as Array<any>);
+  const [recLooksList, setrecLooksList] = React.useState([] as Array<any>);
 
   useEffect(() => {
     console.log("USE EFFECT");
@@ -100,10 +109,42 @@ const Look: React.FC<LookProps> = ({
     });
 
     constructorClient.browse.getBrowseResults("collection_id", _meta.deliveryId, {
-      resultsPerPage: 50
+      numResults: 10
     }).then((data: any) => {
       console.log("DATA", data);
       setproductsList(data.response.results);
+
+      const title = data?.response?.collection?.data?.title;
+      const color = data?.response?.collection?.data?.color;
+      const brand = data?.response?.collection?.data?.brand;
+
+      let recs = [] as any[];
+      if ( color ) {
+        let searchFilter = `https://amplience.com/look ${color}`;
+        constructorClient.search.getSearchResults(searchFilter, {
+          section: "Looks",
+          numResults: 6
+        }).then((data: any) => {
+          console.log("RECS COLOR", data);
+          data.response.results.forEach((item: any) => {
+              if ( item.data.title !== title ) recs.push(item);
+          })
+       })
+      }
+      if ( brand ) {
+        let searchFilter = `https://amplience.com/look ${brand}`;
+        constructorClient.search.getSearchResults(searchFilter, {
+          section: "Looks",
+          numResults: 6
+        }).then((data: any) => {
+          console.log("RECS BRAND", data);
+          data.response.results.forEach((item: any) => {
+            if ( item.data.title !== title ) recs.push(item);
+          })
+          // shuffle(recs);
+          setrecLooksList(recs);
+       })
+      }
     }).catch((e: any) => { console.log("ERROR", e) });
 
     constructorClient.recommendations.getRecommendations('looks_page', {
@@ -174,6 +215,13 @@ const Look: React.FC<LookProps> = ({
             </Paper>
       </Grid>
       <Grid item xs={12}>
+
+      <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Recommended Looks</Typography>
+      <Grid container style={{display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
+        {
+          recLooksList.slice(0, 6).map((look: any, i: number) => { return <LookCard key={i} {...look.data} deliveryKey={look.data._meta.deliveryKey} deliveryId={look.data._meta.deliveryId}/> } )
+        }
+      </Grid>
         
       <Typography style={{ marginTop: 30, marginBottom: 20 }} variant="h2" component="h2">Recently Viewed Looks</Typography>
       <Grid container style={{display: "flex", justifyContent: "flex-start", flexWrap: "wrap", listStyle: "none", margin: 0, padding: 0 }}>
