@@ -137,39 +137,35 @@ const Look: React.FC<LookProps> = ({
 
     // Getting same color and same brand recommendations
     let recs = [] as any[];
-    if (color) {
-      let searchFilter = `https://amplience.com/look ${color}`;
-      constructorClient.search.getSearchResults(searchFilter, {
-        section: "Looks",
-        numResults: 6
-      }).then((data: any) => {
-        console.log("RECS COLOR", data);
-        data.response.results.forEach((item: any) => {
-          if (item.data.title !== title) {
-            item.data.reason = "(because of color)";
-            recs.push(item);
-          }
-        })
+    let searchFilter = `https://amplience.com/look ${color}`;
+    constructorClient.search.getSearchResults(searchFilter, {
+      section: "Looks",
+      numResults: 6
+    }).then((data: any) => {
+      console.log("RECS COLOR", data);
+      data.response.results.forEach((item: any) => {
+        if (item.data.title !== title) {
+          item.data.reason = "(because of color)";
+          recs.push(item);
+        }
       })
-    }
-    if (brand) {
-      let searchFilter = `https://amplience.com/look ${brand}`;
-      constructorClient.search.getSearchResults(searchFilter, {
-        section: "Looks",
-        numResults: 6
-      }).then((data: any) => {
-        console.log("RECS BRAND", data);
-        data.response.results.forEach((item: any) => {
-          if (item.data.title !== title) {
-            item.data.reason = "(because of brand)";
-            recs.push(item)
-          };
-        })
-        // shuffle(recs);
-        setrecLooksList(recs);
+    })
+    searchFilter = `https://amplience.com/look ${brand}`;
+    constructorClient.search.getSearchResults(searchFilter, {
+      section: "Looks",
+      numResults: 6
+    }).then((data: any) => {
+      console.log("RECS BRAND", data);
+      data.response.results.forEach((item: any) => {
+        if (item.data.title !== title) {
+          item.data.reason = "(because of brand)";
+          recs.push(item)
+        };
       })
-    }
-  }, [_meta.deliveryId]);
+      // shuffle(recs);
+      setrecLooksList(recs);
+    })
+  }, []);
 
   return (
     <Grid container>
