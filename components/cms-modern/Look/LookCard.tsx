@@ -69,6 +69,8 @@ export interface LookProps extends WithStyles<typeof styles> {
     deliveryKey: any;
 
     deliveryId: any;
+
+    reason?: string;
 }
 
 const LookCard: React.FC<LookProps> = ({
@@ -77,6 +79,7 @@ const LookCard: React.FC<LookProps> = ({
   title,
   lookId,
   description,
+  reason,
   deliveryKey,
   deliveryId,
   classes
@@ -99,6 +102,9 @@ const LookCard: React.FC<LookProps> = ({
                   <div style={{textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: 'translateX(-50%) translateY(-50%)'}}>
                     <Typography style={{color: "#fff"}} component="h4" variant="h4">{brand}</Typography>
                     <Typography style={{color: "#fff"}} component="h5" variant="h5">{title}</Typography>
+                    {
+                      reason && <Typography style={{fontStyle: "italic", color: "#fff"}} component="h5" variant="h5">{reason}</Typography>
+                    }
                   </div>
                 </div>
                 <Image alt={title} image={image} query={'fmt=jpg&bg=rgb(255,255,255)&w=220'} />

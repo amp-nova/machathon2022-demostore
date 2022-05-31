@@ -127,7 +127,10 @@ const Look: React.FC<LookProps> = ({
         }).then((data: any) => {
           console.log("RECS COLOR", data);
           data.response.results.forEach((item: any) => {
-              if ( item.data.title !== title ) recs.push(item);
+              if ( item.data.title !== title ) {
+                item.data.reason = "(because of color)";
+                recs.push(item);
+              }
           })
        })
       }
@@ -139,7 +142,10 @@ const Look: React.FC<LookProps> = ({
         }).then((data: any) => {
           console.log("RECS BRAND", data);
           data.response.results.forEach((item: any) => {
-            if ( item.data.title !== title ) recs.push(item);
+            if ( item.data.title !== title ) {
+              item.data.reason = "(because of brand)";
+              recs.push(item)
+            };
           })
           // shuffle(recs);
           setrecLooksList(recs);
