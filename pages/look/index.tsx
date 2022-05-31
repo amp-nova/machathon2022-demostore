@@ -44,14 +44,13 @@ export default function LookMainPage(
   };
 
   useEffect(() => {
-    console.log("USE EFFECT");
-
     const constructorClient = new ConstructorIOClient({
       apiKey: 'key_qFJeU4DThqOqEtQt'
-      // sessionId: 1234,
-      // clientId: "1234"
     });
 
+    /**
+     * Building filters
+     */
     const filters = {} as FilterProps;
     if (selectedBrand) {
       filters.brand = selectedBrand;
@@ -63,12 +62,12 @@ export default function LookMainPage(
     let searchFilter = 'https://amplience.com/look';
     if (search.length > 2) searchFilter += " " + search;
 
+    // Searching for looks
     constructorClient.search.getSearchResults(searchFilter, {
       section: "Looks",
       filters,
       resultsPerPage: 50
     }).then((data: any) => {
-      console.log("DATA", data);
       setlooksList(data.response.results);
       setlooksNumber(data.response.total_num_results);
       data.response.facets.forEach((item: any) => {
@@ -81,6 +80,7 @@ export default function LookMainPage(
       })
     }).catch((e: any) => { console.log("ERROR", e) });
 
+    // Getting previously viewed looks
     constructorClient.recommendations.getRecommendations('looks_page', {
       section: "Looks",
       numResults: 5
@@ -98,7 +98,7 @@ export default function LookMainPage(
 
       <Grid container>
         <Grid item md={2} xs={12}>
-          <div style={{paddingBottom: 20}}>
+          <div style={{ paddingBottom: 20 }}>
             <input value={search} onChange={onChange} />
           </div>
           {

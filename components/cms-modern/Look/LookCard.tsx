@@ -64,12 +64,24 @@ export interface LookProps extends WithStyles<typeof styles> {
      */
     description?: string;
 
+    /**
+     * Look ID
+     */
     lookId?: string;
 
+    /**
+     * Amplience Delivery Key
+     */
     deliveryKey: any;
 
+    /**
+     * Amplience Delivery ID
+     */
     deliveryId: any;
 
+    /**
+     * Recommendation reason
+     */
     reason?: string;
 }
 
