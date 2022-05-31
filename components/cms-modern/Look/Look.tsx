@@ -16,6 +16,13 @@ const styles = (theme: Theme) => ({
     },
     content: {
         padding: 10
+    },
+    overlay: {
+      zIndex: 100,
+      background: "rgba(0, 0, 0, 0.0)",
+      opacity: 0,
+      transition: "0.5s",
+      '&:hover': { transition: "0.5s", opacity: 1, background: "rgba(0, 0, 0, 0.5)" }
     }
 });
 
@@ -143,7 +150,14 @@ const Look: React.FC<LookProps> = ({
             {
               productsList.map((item: any, i: number) => {
                 return <Grid md={2} xs={4} item key={i} style={{padding: 10}}>
+                  <div className="amp-dc-image" style={{position: "relative"}}>
+                    <div className={classes.overlay} style={{width: "100%", height: "100%", top: 0, left: 0, position: "absolute"}}>
+                      <div style={{overflow: "hidden", width: 100, textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: 'translateX(-50%) translateY(-50%)'}}>
+                        <Typography noWrap style={{color: "#fff"}} component="p" variant="body1">{item.value}</Typography>
+                      </div>
+                    </div>
                     <img alt={item.value} width="100%" src={`${item.data.image_url}?fmt=jpg&bg=rgb(255,255,255)&w=250`} />
+                  </div>
                   </Grid>
               })
             }
